@@ -1,0 +1,111 @@
+---
+title: "2018-12-05"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readr)
+libraryData <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/library100_102.csv")
+```
+
+```{r}
+libraryData$學院 <- as.factor(libraryData$學院)
+libraryData$書籍館藏地 <- as.factor(libraryData$書籍館藏地)
+libraryData$借閱時間 <- as.factor(libraryData$借閱時間)
+
+```
+```{r}
+
+```
+
+
+```{r}
+## 1
+max(libraryData$讀者借閱冊數)-> maxNumber
+min(libraryData$讀者借閱冊數)-> minNumber
+paste0("最大值： ",maxNumber, " 最小值： ",minNumber)
+
+## 2
+max(libraryData$入學年)-> maxNumber
+min(libraryData$入學年)-> minNumber
+paste0("最大值： ",maxNumber, " 最小值： ",minNumber)
+
+## 3
+max(libraryData$書籍上架年月)-> maxNumber
+min(libraryData$書籍上架年月)-> minNumber
+paste0("最大值： ",maxNumber, " 最小值： ",minNumber)
+```
+
+```{r}
+minMaxFun <- function(x){
+max(x)-> maxNumber
+min(x)-> minNumber
+paste0("最大值： ",maxNumber, " 最小值： ",minNumber)}
+```
+
+```{r}
+minMaxFun(libraryData$讀者借閱冊數) -> a1
+a1
+minMaxFun(libraryData$入學年) -> a2
+a2
+minMaxFun(libraryData$書籍上架年月) -> a3
+a3
+```           
+
+```{r}
+minMaxFun2 <- function(x){
+max(x)-> maxNumber
+min(x)-> minNumber
+paste0("最大值： ",maxNumber, " 最小值： ",minNumber)-> result
+return(result)
+}
+```
+
+```{r}
+!is.numeric(libraryData$學號)
+```
+
+```{r}
+not_numeric <- function(x){!is.numeric(x)}
+```
+
+##找出屬於人文學院的子樣本
+```{r}
+(libraryData$學院=="人文學院") -> logIndex
+libraryData[logIndex,] -> subsample
+
+```
+
+##找出屬於社會科學院的子樣本
+```{r}
+(libraryData$學院=="社會科學院") -> logIndex
+libraryData[logIndex,] -> subsample
+```
+
+##function
+```{r}
+findMyCollege <- function(x){
+  (libraryData$學院==x) ->logIndex
+  libraryData[logIndex,] -> subsample
+  return(subsample)
+}
+```
+
+```{r}
+findMyCollege("人文學院") -> sample1
+nrow(sample1)
+findMyCollege("社會科學院") -> sample2
+nrow(sample2)
+
+```
+
+ a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing
+*Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
