@@ -1,0 +1,59 @@
+---
+title: "2018-12-12"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(readr)
+libraryData <- read_csv("https://raw.githubusercontent.com/tpemartin/github-data/master/library100_102.csv")
+```
+
+##資料中的書籍館藏地有那幾類？請將類別存在storageLocations物件中。[hint:使用levels()]
+```{r}
+##串接
+libraryData$書籍館藏地 %>% as.factor %>% levels -> storageLocations
+storageLocations
+#另解
+libraryData$書籍館藏地 <- as.factor(libraryData$書籍館藏地)
+levels(libraryData$書籍館藏地) -> storageLocations
+```
+
+##borrowCount_i的內容會一直被最近一次i執行下的值取代,創造儲存容器可以用vector()函數
+
+##i要從1執行到18
+```{r}
+for (i in c(1:18)) {
+  # 0
+allBorrowCount <- vector("numeric",18)
+i<-1
+  # 1
+  storageLocation_i <- storageLocations[i] 
+  # 2
+  numericalIndexForSubsample<-which(libraryData$書籍館藏地==storageLocation_i)
+  subsample_i <- libraryData[numericalIndexForSubsample,]
+  # 3
+  borrowCount_i <- nrow(subsample_i)
+  # 4
+  allBorrowCount[[i]]<-borrowCount_i
+  }
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
